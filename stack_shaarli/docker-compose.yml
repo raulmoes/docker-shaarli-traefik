@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  shaarli:
+    image: shaarli/shaarli:latest
+    container_name: shaarli
+    expose:
+      - 80
+    volumes:
+      - shaarli-data:/var/www/shaarli/data
+      - shaarli-cache:/var/www/shaarli/cache
+    networks:
+      - web
+    labels:
+      - traefik.http.routers.shaarli.rule=Host(`yourdomainaccess`)
+      - traefik.http.routers.shaarli.tls=true
+      - traefik.http.routers.shaarli.tls.certresolver=lets-encrypt
+#     - traefik.port=80
+volumes:
+  shaarli-data:
+  shaarli-cache:
+
+networks:
+   web:
+    external: true
